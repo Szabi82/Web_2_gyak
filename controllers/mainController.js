@@ -1,4 +1,7 @@
 const User = require("../models/User");
+const Movie = require("../models/Movie");
+const Cinema = require("../models/Cinema");
+const Screening = require("../models/Screening");
 const bcrypt = require("bcrypt");
 
 exports.homeIndex = (req, res) => { res.render("home"); };
@@ -37,6 +40,21 @@ exports.loginPost = async (req, res) => {
         res.redirect("/user");
     }
 };
+
 exports.logout = (req, res) => {
     req.session.destroy(() => { res.redirect("/"); });
+};
+
+// ÚJ: Adatbázis lekérdezés a 3 táblához (Filmek, Mozik, Helyek)
+exports.databaseIndex = async (req, res) => {
+    try {
+        const movies = await Movie.find().limit(20); // Első 20 film
+        const cinemas = await Cinema.find();         // Összes mozi
+        const screenings = await Screening.find().limit(20); // Kapcsolatok
+
+        res.render("database", { movies, cinemas, screenings });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Hiba történt az adatbázis lekérdezésekor!");
+    }
 };

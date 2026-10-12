@@ -4,6 +4,16 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const app = express();
+
+// ---  MONGOOSE CSATLAKOZÁS ---
+const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/web2_mozi";
+mongoose.connect(MONGO_URI)
+    .then(() => console.log("MongoDB sikeresen csatlakozva!"))
+    .catch(err => console.error("MongoDB csatlakozási hiba:", err));
+
+
+
+
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));

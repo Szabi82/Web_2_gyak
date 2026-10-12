@@ -1,8 +1,27 @@
 <%- include("partials/header") %>
-<% if(message){ %><p class="message"><%= message %></p><% } %>
-<form method="POST">
-    <input name="username">
-    <input type="password" name="password">
-    <button>Login</button>
-</form>
+
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card bg-black border-secondary text-light p-4 shadow">
+            <h3 class="text-center text-danger mb-4"><i class="fa fa-sign-in-alt me-2"></i>Bejelentkezés</h3>
+            
+            <% if(message){ %>
+                <div class="alert alert-danger py-2"><%= message %></div>
+            <% } %>
+
+            <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label text-secondary">Felhasználónév</label>
+                    <input type="text" name="username" class="form-control bg-dark text-light border-secondary" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label text-secondary">Jelszó</label>
+                    <input type="password" name="password" class="form-control bg-dark text-light border-secondary" required>
+                </div>
+                <button type="submit" class="btn btn-danger w-100 fw-bold mt-2">Bejelentkezés</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 <%- include("partials/footer") %>

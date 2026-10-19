@@ -4,13 +4,12 @@ const Movie = require("./models/Movie");
 const Cinema = require("./models/Cinema");
 const Screening = require("./models/Screening");
 
-// MongoDB kapcsolat (pont úgy, ahogy a te szerveredben is van)
 const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/web2_mozi";
 
 async function seedDB() {
     try {
         await mongoose.connect(MONGO_URI);
-        console.log("Adatbázis csatlakozva a seedeléshez...");
+        console.log("Adatbázis csatlakozva");
 
         // Előző adatok törlése, hogy ne duplikálódjanak
         await Movie.deleteMany({});

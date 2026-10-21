@@ -1,0 +1,43 @@
+<%- include('../partials/header') %>
+
+<div class="container-fluid pt-4 px-4">
+    <div class="bg-secondary rounded h-100 p-4">
+        <h6 class="mb-4">Új film felvétele</h6>
+        <% if (error) { %><div class="alert alert-danger"><%= error %></div><% } %>
+        
+        <form action="/movies" method="POST">
+            <div class="mb-3">
+                <label class="form-label">Film kód (fkod)</label>
+                <input type="number" name="fkod" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Film cím</label>
+                <input type="text" name="filmcim" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Színes (pl. 1 vagy 0)</label>
+                <input type="number" name="szines" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Szinkron</label>
+                <input type="text" name="szinkron" class="form-control">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Származás</label>
+                <input type="text" name="szarmazas" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Műfaj</label>
+                <input type="text" name="mufaj" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Hossz (percben)</label>
+                <input type="number" name="hossz" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Mentés</button>
+            <a href="/movies" class="btn btn-secondary">Mégse</a>
+        </form>
+    </div>
+</div>
+
+<%- include('../partials/footer') %>

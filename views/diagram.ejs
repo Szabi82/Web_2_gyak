@@ -1,0 +1,71 @@
+<%- include("partials/header") %>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card bg-black border-secondary text-light p-4 shadow">
+            <h3 class="text-danger mb-3"><i class="fa fa-chart-bar me-2"></i>Statisztikai Diagram</h3>
+            <p class="text-secondary">Az adatbázis adatai alapján generált grafikon (Chart.js).</p>
+            
+            <div class="bg-dark p-4 rounded border border-secondary mt-3" style="position: relative; height: 400vh; max-height: 400px; width: 100%;">
+                <!-- A Chart.js ehhez a canvas elemhez kötődik -->
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js CDN betöltése -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Itt rajzoljuk ki a diagramot a szervertől kapott adatok alapján
+    const ctx = document.getElementById('myChart').getContext('2d');
+    
+    // Példa adatok (ezeket majd dinamikusan is átadhatod a backendből, pl. <%= JSON.stringify(labels) %>)
+    const myChart = new Chart(ctx, {
+        type: 'bar', // Lehet 'pie', 'line', 'bar', stb.
+        data: {
+            labels: ['1. kategória', '2. kategória', '3. kategória', '4. kategória'],
+            datasets: [{
+                label: 'Adatok eloszlása',
+                data: [12, 19, 3, 5],
+                backgroundColor: [
+                    'rgba(220, 53, 69, 0.7)',
+                    'rgba(13, 202, 240, 0.7)',
+                    'rgba(255, 193, 7, 0.7)',
+                    'rgba(25, 135, 84, 0.7)'
+                ],
+                borderColor: [
+                    'rgba(220, 53, 69, 1)',
+                    'rgba(13, 202, 240, 1)',
+                    'rgba(255, 193, 7, 1)',
+                    'rgba(25, 135, 84, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#fff'
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    ticks: { color: '#adb5bd' },
+                    grid: { color: '#333' }
+                },
+                x: {
+                    ticks: { color: '#adb5bd' },
+                    grid: { color: '#333' }
+                }
+            }
+        }
+    });
+</script>
+
+<%- include("partials/footer") %>

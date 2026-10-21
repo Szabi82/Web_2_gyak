@@ -33,5 +33,5 @@ app.use((req, res, next) => {
     next();
 });
 app.use("/", require("./routes/mainRouter"));
-const port = 3000;
-app.listen(port, () => {console.log(`Server: http://localhost:${port}`);});
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {console.log(`Server fut a ${PORT} porton`);});

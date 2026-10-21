@@ -31,8 +31,8 @@ router.get('/diagram', async (req, res) => {
         res.render('diagram', { 
             user: req.session.user,
             activePage: 'diagram',
-            labels: labels,
-            dataValues: dataValues
+            labels: labels,       
+            dataValues: dataValues 
         });
     } catch (err) {
         console.error(err);
@@ -68,11 +68,9 @@ router.post('/contact', async (req, res) => {
     }
 
     try {
-        // Mentés az adatbázisba
         const newMessage = new Message({ name, email, message });
         await newMessage.save();
 
-        // Sikeres üzenet
         res.render('contact', { 
             error: null, 
             success: 'Köszönjük az üzenetet! Sikeresen elküldve.', 
@@ -87,6 +85,92 @@ router.post('/contact', async (req, res) => {
         });
     }
 });
+router.get('/messages', async (req, res) => {
+    try {
+        const messages = await Message.find().sort({ createdAt: -1 });
+        res.render('messages', { messages });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Hiba történt az üzenetek lekérése során.");
+    }
+});
 
+const Movie = require('../models/Movie');
+
+router.get('/movies', async (req, res) => {
+    try {
+        const movies = await Movie.find().sort({ fkod: 1 });
+        res.render('movies/index', { movies });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Hiba a filmek betöltésekor.");
+    }
+});
+
+router.get('/movies/new', (req, res) => {
+    res.render('movies/new', { error: null });
+});
+
+router.post('/movies', async (req, res) => {
+    const { fkod, filmcim, szines, szinkron, szarmazas, mufaj, hossz } = req.body;
+    
+    try {
+        const newMovie = new Movie({ 
+            fkod: Number(fkod), 
+            filmcim, 
+            szines: Number(szines), 
+            szinkron, 
+            szarmazas, 
+            mufaj, 
+            hossz: Number(hossz) 
+        });
+        await newMovie.save();
+        res.redirect('/movies');
+    } catch (err) {
+        console.error(err);
+        res.render('movies/new', { error: 'Hiba történt a film mentése során (lehet, hogy az fkod már létezik).' });
+    }
+});
+
+router.get('/movies/:id/edit', async (req, res) => {
+    try {
+        const movie = await Movie.findById(req.params.id);
+        if (!movie) return res.status(404).send("A film nem található.");
+        res.render('movies/edit', { movie, error: null });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Szerver hiba.");
+    }
+});
+
+router.post('/movies/:id/edit', async (req, res) => {
+    const { fkod, filmcim, szines, szinkron, szarmazas, mufaj, hossz } = req.body;
+    try {
+        await Movie.findByIdAndUpdate(req.params.id, {
+            fkod: Number(fkod), 
+            filmcim, 
+            szines: Number(szines), 
+            szinkron, 
+            szarmazas, 
+            mufaj, 
+            hossz: Number(hossz)
+        });
+        res.redirect('/movies');
+    } catch (err) {
+        console.error(err);
+        const movie = await Movie.findById(req.params.id);
+        res.render('movies/edit', { movie, error: 'Hiba a frissítés során.' });
+    }
+});
+
+router.post('/movies/:id/delete', async (req, res) => {
+    try {
+        await Movie.findByIdAndDelete(req.params.id);
+        res.redirect('/movies');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Hiba a törlés során.");
+    }
+});
 
 module.exports = router;

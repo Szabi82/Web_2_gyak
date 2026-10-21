@@ -1,0 +1,36 @@
+<%- include('partials/header') %>
+
+<div class="container-fluid pt-4 px-4">
+    <div class="bg-secondary rounded h-100 p-4">
+        <h6 class="mb-4">Beküldött üzenetek</h6>
+        
+        <% if (messages.length === 0) { %>
+            <div class="alert alert-info">Jelenleg nincs egyetlen beküldött üzenet sem.</div>
+        <% } else { %>
+            <div class="table-responsive">
+                <table class="table text-start align-middle table-bordered table-hover mb-0">
+                    <thead>
+                        <tr class="text-white">
+                            <th scope="col">Dátum</th>
+                            <th scope="col">Név</th>
+                            <th scope="col">E-mail</th>
+                            <th scope="col">Üzenet</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% messages.forEach(msg => { %>
+                            <tr>
+                                <td><%= new Date(msg.createdAt).toLocaleString('hu-HU') %></td>
+                                <td><%= msg.name %></td>
+                                <td><a href="mailto:<%= msg.email %>"><%= msg.email %></a></td>
+                                <td><%= msg.message %></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<%- include('partials/footer') %>

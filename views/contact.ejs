@@ -6,12 +6,14 @@
             <div class="bg-secondary rounded h-100 p-4">
                 <h6 class="mb-4">Kapcsolat / Üzenet küldése</h6>
 
+                <!-- Hibaüzenet megjelenítése, ha van -->
                 <% if (error) { %>
                     <div class="alert alert-danger" role="alert">
                         <%= error %>
                     </div>
                 <% } %>
 
+                <!-- Sikerüzenet megjelenítése, ha van -->
                 <% if (success) { %>
                     <div class="alert alert-success" role="alert">
                         <%= success %>

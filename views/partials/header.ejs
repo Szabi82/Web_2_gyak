@@ -38,6 +38,7 @@
                     <a href="/" class="nav-item nav-link <%= (typeof activePage !== 'undefined' && activePage === 'home') ? 'active text-danger' : '' %>"><i class="fa fa-tachometer-alt me-2"></i>Főoldal</a>
                     <a href="/database" class="nav-item nav-link <%= (typeof activePage !== 'undefined' && activePage === 'database') ? 'active text-danger' : '' %>"><i class="fa fa-database me-2"></i>Adatbázis</a>
                     <a href="/diagram" class="nav-item nav-link <%= (typeof activePage !== 'undefined' && activePage === 'diagram') ? 'active text-danger' : '' %>"><i class="fa fa-chart-bar me-2"></i>Diagram</a>
+                    <a href="/contact" class="nav-item nav-link <%= (typeof activePage !== 'undefined' && activePage === 'contact') ? 'active text-danger' : '' %>"><i class="fa fa-address-book me-2"></i>Kapcsolat</a>
 
                     <% if(user){ %>
                         <a href="/user" class="nav-item nav-link <%= (typeof activePage !== 'undefined' && activePage === 'user') ? 'active text-danger' : '' %>"><i class="fa fa-envelope me-2"></i>Üzenetek</a>

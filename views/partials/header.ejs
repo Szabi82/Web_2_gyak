@@ -43,7 +43,7 @@
                     <% if(user){ %>
                         <a href="/user" class="nav-item nav-link <%= (typeof activePage !== 'undefined' && activePage === 'user') ? 'active text-danger' : '' %>"><i class="fa fa-envelope me-2"></i>Üzenetek</a>
                         <a href="/movies" class="nav-item nav-link"><i class="fa fa-film me-2"></i>Filmek kezelése</a>
-                        <a href="/messages" class="nav-item nav-link"><i class="fa fa-envelope me-2"></i>Üzenetek</a>
+                        
                     <% } %>
 
                     <% if(user && user.role=="admin"){ %>

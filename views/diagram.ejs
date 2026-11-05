@@ -21,7 +21,7 @@
     // Itt rajzoljuk ki a diagramot a szervertől kapott adatok alapján
     const ctx = document.getElementById('myChart').getContext('2d');
     
-    // Példa adatok (ezeket majd dinamikusan is átadhatod a backendből, pl. <%= JSON.stringify(labels) %>)
+    // Példa adatok
     const myChart = new Chart(ctx, {
         type: 'bar', // Lehet 'pie', 'line', 'bar', stb.
         data: {

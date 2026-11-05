@@ -4,7 +4,38 @@ const Cinema = require("../models/Cinema");
 const Screening = require("../models/Screening");
 const bcrypt = require("bcrypt");
 
-exports.homeIndex = (req, res) => { res.render("home"); };
+exports.homeIndex = async (req, res) => {
+    try {
+        const movieCount = await Movie.countDocuments();
+        const cinemaCount = await Cinema.countDocuments();
+        const screeningCount = await Screening.countDocuments();
+
+        // az összes film játékideje órában
+        const sum = await Movie.aggregate([
+            { $group: { _id: null, total: { $sum: "$hossz" } } }
+        ]);
+        const totalHours = sum.length ? Math.round(sum[0].total / 60) : 0;
+
+        // 3 véletlenszerű film, minden betöltésnél más
+        const featured = await Movie.aggregate([{ $sample: { size: 3 } }]);
+
+        // pár mozi a listához
+        const cinemas = await Cinema.find().limit(5);
+
+        res.render("home", {
+            user: req.session.user || null,
+            movieCount,
+            cinemaCount,
+            screeningCount,
+            totalHours,
+            featured,
+            cinemas
+        });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send("Hiba történt a főoldal betöltésekor!");
+    }
+};
 exports.userIndex = (req, res) => { res.render("user"); };
 exports.adminIndex = (req, res) => { res.render("admin"); };
 

@@ -1,14 +1,110 @@
 <%- include("partials/header") %>
+<div class="container-fluid pt-4 px-4">
 
-<div class="row">
-    <div class="col-12">
-        <div class="card bg-black border-secondary text-light p-5 shadow">
-            <h1 class="display-5 fw-bold text-danger mb-3"><i class="fa fa-home me-2"></i>Főoldal</h1>
-            <p class="lead text-secondary">Üdvözöljük a Mozi Projekt webalkalmazásban! Ez az oldal minden látogató számára elérhető.</p>
-            <hr class="border-secondary my-4">
-            <p class="text-light">Használja a bal oldali menüt a filmek és adatok böngészéséhez, vagy jelentkezzen be a további funkciókért.</p>
+    <!-- HERO -->
+    <div class="hero rounded p-5 mb-4">
+        <h1 class="display-4 text-white">
+            <i class="fa fa-film text-primary me-2"></i>Mozi Projekt
+        </h1>
+        <p class="lead text-white-50 mb-4">
+            Filmek, mozik és vetítések egy helyen. Böngészd az adatbázist,
+            nézd meg a statisztikákat, vagy írj nekünk üzenetet.
+        </p>
+        <% if (user) { %>
+            <p class="text-white">Üdv újra, <strong><%= user.username || user.name || user.email %></strong>!</p>
+        <% } %>
+        <a href="/database" class="btn btn-danger btn-lg me-2">Filmek böngészése</a>
+        <% if (!user) { %>
+            <a href="/register" class="btn btn-outline-light btn-lg">Regisztráció</a>
+        <% } %>
+    </div>
+
+    <!-- STATISZTIKA -->
+    <div class="row g-4 mb-4">
+        <div class="col-sm-6 col-xl-3">
+            <div class="card-dark rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-video fa-3x accent"></i>
+                <div class="ms-3 text-end">
+                    <p class="mb-2">Filmek</p>
+                    <h5 class="mb-0"><%= movieCount %></h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="card-dark rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-building fa-3x accent"></i>
+                <div class="ms-3 text-end">
+                    <p class="mb-2">Mozik</p>
+                    <h5 class="mb-0"><%= cinemaCount %></h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="card-dark rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-ticket-alt fa-3x accent"></i>
+                <div class="ms-3 text-end">
+                    <p class="mb-2">Vetítések</p>
+                    <h5 class="mb-0"><%= screeningCount %></h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 col-xl-3">
+            <div class="card-dark rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-clock fa-3x accent "></i>
+                <div class="ms-3 text-end">
+                    <p class="mb-2">Összes játékidő</p>
+                    <h5 class="mb-0"><%= totalHours %> óra</h5>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- KIEMELT FILMEK -->
+    <div class="card-dark rounded p-4 mb-4">
+        <h5 class="mb-4">Ajánlott filmek</h5>
+        <div class="row g-4">
+            <% featured.forEach(function(m) { %>
+                <div class="col-md-4">
+                    <div class="border border-danger rounded p-3 h-100">
+                        <h6 class="accent"><%= m.filmcim %></h6>
+                        <p class="mb-1">Műfaj: <%= m.mufaj %></p>
+                        <p class="mb-1">Származás: <%= m.szarmazas %></p>
+                        <p class="mb-1">Játékidő: <%= m.hossz %> perc</p>
+                        <p class="mb-1"><%= m.szines === -1 ? "Színes" : "Fekete-fehér" %></p>
+                        <p class="mb-0">Szinkron: <%= m.szinkron === "mb" ? "Magyarul beszélő" : (m.szinkron || "–") %></p>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+        <a href="/database" class="btn btn-sm btn-primary mt-4">Összes film</a>
+    </div>
+
+    <!-- MOZIK -->
+    <div class="card-dark rounded p-4 mb-4">
+        <h5 class="mb-4">Mozijaink</h5>
+        <ul class="list-unstyled mb-0">
+            <% cinemas.forEach(function(c) { %>
+                <li class="mb-2">
+                    <i class="fa fa-map-marker-alt accent me-2"></i>
+                    <strong><%= c.mozinev %></strong> – <%= c.irszam %> <%= c.cim %>
+                </li>
+            <% }) %>
+        </ul>
+    </div>
+
 </div>
 
+<style>
+    .hero {
+        background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85)),
+                    url("/img/hero.jpg") center/cover no-repeat;
+        background-color: #111;
+    }
+    .card-dark {
+        background-color: #191C24;
+    }
+    .accent {
+        color: #EB1616;
+    }
+</style>
 <%- include("partials/footer") %>

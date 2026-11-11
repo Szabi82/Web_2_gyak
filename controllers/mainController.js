@@ -9,6 +9,7 @@ exports.homeIndex = async (req, res) => {
         const movieCount = await Movie.countDocuments();
         const cinemaCount = await Cinema.countDocuments();
         const screeningCount = await Screening.countDocuments();
+        console.log("Screening:", Screening.collection.name, "| adatbázis:", Screening.db.name, "| db:", screeningCount);        
 
         // az összes film játékideje órában
         const sum = await Movie.aggregate([

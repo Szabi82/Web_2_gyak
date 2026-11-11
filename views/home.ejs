@@ -13,7 +13,7 @@
         <% if (user) { %>
             <p class="text-white">Üdv újra, <strong><%= user.username || user.name || user.email %></strong>!</p>
         <% } %>
-        <a href="/database" class="btn btn-primary btn-lg me-2">Filmek böngészése</a>
+        <a href="/database" class="btn btn-danger btn-lg me-2">Filmek böngészése</a>
         <% if (!user) { %>
             <a href="/register" class="btn btn-outline-light btn-lg">Regisztráció</a>
         <% } %>
@@ -22,8 +22,8 @@
     <!-- STATISZTIKA -->
     <div class="row g-4 mb-4">
         <div class="col-sm-6 col-xl-3">
-            <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-                <i class="fa fa-video fa-3x text-primary"></i>
+            <div class="card-dark rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-video fa-3x accent"></i>
                 <div class="ms-3 text-end">
                     <p class="mb-2">Filmek</p>
                     <h5 class="mb-0"><%= movieCount %></h5>
@@ -31,8 +31,8 @@
             </div>
         </div>
         <div class="col-sm-6 col-xl-3">
-            <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-                <i class="fa fa-building fa-3x text-primary"></i>
+            <div class="card-dark rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-building fa-3x accent"></i>
                 <div class="ms-3 text-end">
                     <p class="mb-2">Mozik</p>
                     <h5 class="mb-0"><%= cinemaCount %></h5>
@@ -40,8 +40,8 @@
             </div>
         </div>
         <div class="col-sm-6 col-xl-3">
-            <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-                <i class="fa fa-ticket-alt fa-3x text-primary"></i>
+            <div class="card-dark rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-ticket-alt fa-3x accent"></i>
                 <div class="ms-3 text-end">
                     <p class="mb-2">Vetítések</p>
                     <h5 class="mb-0"><%= screeningCount %></h5>
@@ -49,8 +49,8 @@
             </div>
         </div>
         <div class="col-sm-6 col-xl-3">
-            <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4">
-                <i class="fa fa-clock fa-3x text-primary"></i>
+            <div class="card-dark rounded d-flex align-items-center justify-content-between p-4">
+                <i class="fa fa-clock fa-3x accent "></i>
                 <div class="ms-3 text-end">
                     <p class="mb-2">Összes játékidő</p>
                     <h5 class="mb-0"><%= totalHours %> óra</h5>
@@ -60,18 +60,18 @@
     </div>
 
     <!-- KIEMELT FILMEK -->
-    <div class="bg-secondary rounded p-4 mb-4">
+    <div class="card-dark rounded p-4 mb-4">
         <h5 class="mb-4">Ajánlott filmek</h5>
         <div class="row g-4">
             <% featured.forEach(function(m) { %>
                 <div class="col-md-4">
-                    <div class="border border-primary rounded p-3 h-100">
-                        <h6 class="text-primary"><%= m.filmcim %></h6>
+                    <div class="border border-danger rounded p-3 h-100">
+                        <h6 class="accent"><%= m.filmcim %></h6>
                         <p class="mb-1">Műfaj: <%= m.mufaj %></p>
                         <p class="mb-1">Származás: <%= m.szarmazas %></p>
                         <p class="mb-1">Játékidő: <%= m.hossz %> perc</p>
                         <p class="mb-1"><%= m.szines === -1 ? "Színes" : "Fekete-fehér" %></p>
-                        <p class="mb-0">Szinkron: <%= m.szinkron || "–" %></p>
+                        <p class="mb-0">Szinkron: <%= m.szinkron === "mb" ? "Magyarul beszélő" : (m.szinkron || "–") %></p>
                     </div>
                 </div>
             <% }) %>
@@ -80,12 +80,12 @@
     </div>
 
     <!-- MOZIK -->
-    <div class="bg-secondary rounded p-4 mb-4">
+    <div class="card-dark rounded p-4 mb-4">
         <h5 class="mb-4">Mozijaink</h5>
         <ul class="list-unstyled mb-0">
             <% cinemas.forEach(function(c) { %>
                 <li class="mb-2">
-                    <i class="fa fa-map-marker-alt text-primary me-2"></i>
+                    <i class="fa fa-map-marker-alt accent me-2"></i>
                     <strong><%= c.mozinev %></strong> – <%= c.irszam %> <%= c.cim %>
                 </li>
             <% }) %>
@@ -99,6 +99,12 @@
         background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.85)),
                     url("/img/hero.jpg") center/cover no-repeat;
         background-color: #111;
+    }
+    .card-dark {
+        background-color: #191C24;
+    }
+    .accent {
+        color: #EB1616;
     }
 </style>
 <%- include("partials/footer") %>

@@ -8,4 +8,4 @@ const cinemaSchema = new mongoose.Schema({
     telefon: { type: String, default: "" }
 });
 
-module.exports = mongoose.model("Cinema", cinemaSchema);
+module.exports = mongoose.model("Cinema", cinemaSchema, "mozis");

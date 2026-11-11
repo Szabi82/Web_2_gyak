@@ -5,4 +5,4 @@ const screeningSchema = new mongoose.Schema({
     moziazon: { type: Number, required: true }
 });
 
-module.exports = mongoose.model("Screening", screeningSchema);
+module.exports = mongoose.model("Screening", screeningSchema, "helyek");

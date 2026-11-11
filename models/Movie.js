@@ -10,4 +10,4 @@ const movieSchema = new mongoose.Schema({
     hossz: { type: Number, required: true }
 });
 
-module.exports = mongoose.model("Movie", movieSchema);
+module.exports = mongoose.model("Movie", movieSchema, "films");
